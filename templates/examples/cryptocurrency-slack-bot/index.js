@@ -1,6 +1,3 @@
-// SLACK_TOKEN is used to authenticate requests are from Slack.
-// Keep this value secret.
-let SLACK_TOKEN = "PUTYOURTOKENHERE";
 let BOT_NAME = "Crypto-bot 🤖";
 let REPO_URL = "https://github.com/cloudflare/workers-sdk/tree/main/templates";
 
@@ -252,7 +249,7 @@ export default {
 	 * webhook and generates a response.
 	 * @param {Request} request
 	 */
-	async fetch(request) {
+	async fetch(request, env) {
 		// As per: https://api.slack.com/slash-commands
 		// - Slash commands are outgoing webhooks (POST requests)
 		// - Slack authenticates via a verification token.
@@ -268,7 +265,7 @@ export default {
 		let formData;
 		try {
 			formData = await request.formData();
-			if (formData.get("token").toString() !== SLACK_TOKEN) {
+			if (formData.get("token").toString() !== env.SLACK_TOKEN) {
 				return simpleResponse(403, "invalid Slack verification token");
 			}
 		} catch (e) {

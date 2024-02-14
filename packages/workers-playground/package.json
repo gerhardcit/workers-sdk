@@ -6,8 +6,8 @@
 	"scripts": {
 		"build": "tsc && vite build",
 		"dev": "vite",
-		"generate:default-hash": "pnpm exec tsx ./generate-default-hash.ts",
-		"check": "pnpm run generate:default-hash check",
+		"generate:default-hashes": "pnpm exec tsx ./generate-default-hashes.ts",
+		"check": "pnpm run generate:default-hashes check",
 		"deploy": "wrangler pages deploy --project-name workers-playground ./dist"
 	},
 	"dependencies": {

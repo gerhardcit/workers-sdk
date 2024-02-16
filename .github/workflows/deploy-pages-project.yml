@@ -6,6 +6,10 @@ on:
       package:
         required: true
         type: string
+      build:
+        required: true
+        type: string
+        default: "build"
     secrets:
       CLOUDFLARE_API_TOKEN:
         required: true
@@ -27,7 +31,7 @@ jobs:
         uses: ./.github/actions/install-dependencies
 
       - name: Build
-        run: pnpm run build
+        run: pnpm --filter ${{ inputs.package }} run ${{ inputs.build }}
         env:
           CI_OS: ${{ runner.os }}
 

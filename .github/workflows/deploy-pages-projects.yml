@@ -64,11 +64,21 @@ jobs:
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
 
-  workers-playground:
+  workers-playground-production:
     name: Workers Playground
-    if: github.repository_owner == 'cloudflare' && (github.event_name != 'pull_request' || (github.event_name == 'pull_request' && contains(github.event.*.labels.*.name, 'preview:workers-playground' )))
+    if: github.repository_owner == 'cloudflare' && github.event_name != 'pull_request'
     uses: ./.github/workflows/deploy-pages-project.yml
     with:
       package: "workers-playground"
+    secrets:
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+
+  workers-playground-preview:
+    name: Workers Playground
+    if: github.repository_owner == 'cloudflare' && (github.event_name == 'pull_request' && contains(github.event.*.labels.*.name, 'preview:workers-playground' ))
+    uses: ./.github/workflows/deploy-pages-project.yml
+    with:
+      package: "workers-playground"
+      build: "build:testing"
     secrets:
       CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}

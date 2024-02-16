@@ -29,12 +29,12 @@ jobs:
       - name: Install Dependencies
         uses: ./.github/actions/install-dependencies
 
-      - name: Build Wrangler
-        run: pnpm --filter wrangler run build
+      - name: Build
+        run: pnpm run build
         env:
           CI_OS: ${{ runner.os }}
 
-      - name: Build
+      - name: Build Site
         run: pnpm --filter ${{ inputs.package }} run ${{ inputs.build }}
         env:
           CI_OS: ${{ runner.os }}
